@@ -22,3 +22,6 @@ export const bedOptions = [1, 2, 3, 4, 5, 6, 7, 9];
 export const sortOptions = ['price', 'bedrooms'];
 
 export const orderOptions = ['asc', 'desc'];
+
+// todo: retrieve from .env instead
+export const apiURL = 'http://localhost:3000/api';
