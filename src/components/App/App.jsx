@@ -4,7 +4,7 @@ import Header from '../Header';
 import SortAndFilter from '../SortAndFilter';
 import PropertyListing from '../PropertyListing';
 import {getProperties} from "../../api/properties";
-import {set} from "express/lib/application";
+import {array} from "prop-types";
 
 const DUMMY_PROPERTY = {
   id: 73864112,
@@ -21,13 +21,28 @@ const DUMMY_PROPERTY = {
     'https://media.rightmove.co.uk/dir/crop/10:9-16:9/38k/37655/53588679/37655_CAM170036_IMG_01_0000_max_476x317.jpg',
 };
 const App = () => {
+    const [properties, setProperties] = useState();
+
+    const fetchProperties = useCallback(async () => {
+      try {
+        const results = await getProperties();
+        const response = await results.json();
+        setProperties(response);
+      } catch (e) {
+        console.log(e)
+      }
+    }, [])
+
+    useEffect(() => {
+      fetchProperties()
+    }, [])
 
     return (
         <div className="App">
             <Header />
             <main>
                 <SortAndFilter />
-                <PropertyListing />
+                <PropertyListing properties={properties} />
             </main>
         </div>
     );
